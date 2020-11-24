@@ -12,9 +12,10 @@ namespace MyAccount.Mapping
             builder.Entity<User>().Property(p => p.Username).HasMaxLength(30).IsRequired(true);
             builder.Entity<User>().HasIndex(p => p.Username).IsUnique(true);
             builder.Entity<User>().Property(p => p.Password).IsRequired(true).HasMaxLength(100);
+            builder.Entity<User>().Property(p => p.Name).HasMaxLength(100);
             builder.Entity<User>().Property(p => p.CreatedAt).HasDefaultValue(DateTime.UtcNow);
             builder.Entity<User>().Property(p => p.UpdatedAt).HasDefaultValue(DateTime.UtcNow);
-            builder.Entity<User>().Property(p => p.DeletedAt).HasDefaultValue(new Nullable<DateTime>());
+            builder.Entity<User>().Property(p => p.DeletedAt).HasDefaultValue(new Nullable<DateTime>()).IsRequired(false);
         }
     }
 }
