@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -7,11 +8,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using MyAccount.MappingDTO;
 using MyAccount.Services;
-using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Reflection;
 using System.Text;
 
 namespace MyAccount
@@ -30,7 +29,10 @@ namespace MyAccount
         {
             var key = Encoding.ASCII.GetBytes(Settings.Secret);
             new RegisterService().Register(ref services);
+            RegisterMappingDTO mappingConfig = new RegisterMappingDTO();
+            IMapper mapper = mappingConfig.GetMapperConfiguration().CreateMapper();
 
+            services.AddSingleton(mapper);
             services.AddCors();
             services.AddAuthentication(x =>
             {
@@ -80,8 +82,7 @@ namespace MyAccount
                 });
             });
 
-            services.AddControllers();          
-
+            services.AddControllers();
             services.AddEntityFrameworkSqlServer().AddDbContext<ApplicationContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("MyWebApiConection"));
