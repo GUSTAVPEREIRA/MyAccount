@@ -12,12 +12,21 @@ namespace MyAccount.Model
         public string Name { get; set; }
         public DateTime CreatedAt { get; private set; }
         public DateTime UpdatedAt { get; set; }
-        public DateTime DeletedAt { get; private set; }
+        public DateTime? DeletedAt { get; private set; }
 
         public User()
         {
             CreatedAt = DateTime.UtcNow;
             UpdatedAt = DateTime.UtcNow;
+        }
+
+        public User(string username, string password)
+        {
+            Username = username;
+            SetPassword(password);
+            CreatedAt = DateTime.UtcNow;
+            UpdatedAt = DateTime.UtcNow;
+            DeletedAt = new DateTime?();
         }
 
         public void DisableUser()
