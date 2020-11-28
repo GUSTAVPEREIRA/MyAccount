@@ -23,7 +23,7 @@ namespace MyAccount
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //optionsBuilder.UseSqlServer("User ID=postgres;Password=postgres;Server=localhost;Port=5432; Database=ControleBancarioTestes; Integrated Security=true;Pooling=true;");
+                optionsBuilder.UseSqlServer("Server=DESKTOP-000L0B1;Database=MyAccountTest;Trusted_Connection=True;MultipleActiveResultSets=true;");
             }
         }
 
