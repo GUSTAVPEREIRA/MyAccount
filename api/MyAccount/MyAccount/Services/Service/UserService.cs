@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -20,21 +19,6 @@ namespace MyAccount.Services.Service
             this.mapper = mapper;
         }
 
-        public User GetUserForAuthenticate(string username, string password)
-        {
-            try
-            {
-                var user = context.TbUsers.Where(w => w.Username == username && w.Password == password)
-                    .FirstOrDefault();
-
-                return user;
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
-        }
-
         public async Task<User> CreateUser(UserDTO userDTO)
         {
             try
@@ -50,20 +34,11 @@ namespace MyAccount.Services.Service
                 context.SaveChanges();
 
                 return user;
-            }          
+            }
             catch (ApiExceptions ex)
             {
                 throw new ApiExceptions(ex.StatusCode, ex.Message, ex);
             }
-        }
-
-        public async Task<UserDTO> GetUserByID(int id)
-        {
-            var user = await context.TbUsers.FindAsync(id);
-
-            var userDTO = mapper.Map<User, UserDTO>(user);
-
-            return userDTO;
         }
     }
 }

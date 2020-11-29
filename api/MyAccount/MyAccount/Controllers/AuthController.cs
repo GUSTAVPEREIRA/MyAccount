@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyAccount.Model;
+using MyAccount.Repositories.IRepository;
 using MyAccount.Services.IService;
 
 namespace MyAccount.Controllers
@@ -9,12 +10,12 @@ namespace MyAccount.Controllers
     public class AuthController : ControllerBase
     {
         private readonly ITokenService tokenService;
-        private readonly IUserService userService;
+        private readonly IUserRepository userRepository;
 
-        public AuthController(ITokenService tokenService, IUserService userService)
+        public AuthController(ITokenService tokenService, IUserRepository userRepository)
         {
             this.tokenService = tokenService;
-            this.userService = userService;
+            this.userRepository = userRepository;
         }
 
         [Route("Authenticate")]
@@ -24,7 +25,7 @@ namespace MyAccount.Controllers
             var user = new User();
             user.SetPassword(userDTO.password);
             user.Username = userDTO.username;
-            var validUser = userService.GetUserForAuthenticate(user.Username, user.Password);
+            User validUser = userRepository.GetUserForAuthenticate(user.Username, user.Password);
 
             if (validUser == null)
             {
@@ -32,7 +33,6 @@ namespace MyAccount.Controllers
             }
 
             var token = tokenService.GenerateToken(validUser);
-            validUser.SetPassword("");
 
             return new OkObjectResult(new
             {

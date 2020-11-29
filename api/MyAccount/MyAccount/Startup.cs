@@ -9,6 +9,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using MyAccount.MappingDTO;
+using MyAccount.Repositories;
 using MyAccount.Services;
 using System.Collections.Generic;
 using System.Text;
@@ -29,6 +30,7 @@ namespace MyAccount
         {
             var key = Encoding.ASCII.GetBytes(Settings.Secret);
             new RegisterService().Register(ref services);
+            new RegistryRepositories().Register(ref services);
             RegisterMappingDTO mappingConfig = new RegisterMappingDTO();
             IMapper mapper = mappingConfig.GetMapperConfiguration().CreateMapper();
 
