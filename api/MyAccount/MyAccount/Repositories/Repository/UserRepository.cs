@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using MyAccount.DTO.User;
-using MyAccount.Model;
+﻿using MyAccount.Model;
 using MyAccount.Repositories.IRepository;
 using System;
 using System.Linq;
@@ -11,12 +9,10 @@ namespace MyAccount.Repositories.Repository
     public class UserRepository : IUserRepository
     {
         private readonly ApplicationContext context;
-        private readonly IMapper mapper;
 
-        public UserRepository(ApplicationContext context, IMapper mapper)
+        public UserRepository(ApplicationContext context)
         {
             this.context = context;
-            this.mapper = mapper;
         }
 
         public User GetUserForAuthenticate(string username, string password)
@@ -35,13 +31,11 @@ namespace MyAccount.Repositories.Repository
             }
         }
 
-        public async Task<UserDTO> GetUserByID(int id)
+        public async Task<User> GetUserByID(int id)
         {
             var user = await context.TbUsers.FindAsync(id);
 
-            var userDTO = mapper.Map<User, UserDTO>(user);
-
-            return userDTO;
+            return user;
         }
     }
 }
