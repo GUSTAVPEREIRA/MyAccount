@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyAccount.DTO.User;
 using MyAccount.Services.IService;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ namespace MyAccount.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<ActionResult<dynamic>> GetAsync(int id)
         {
             var user = await userService.GetUserById(id);
@@ -34,6 +36,7 @@ namespace MyAccount.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult<dynamic> Post([FromBody] UserDTO dto)
         {
             var user = userService.CreateUser(dto);
@@ -46,6 +49,7 @@ namespace MyAccount.Controllers
         }
 
         [HttpPut("{id}")]
+        [Authorize]
         public ActionResult<dynamic> Put(int id, [FromBody] UserDTO dto)
         {
             var user = userService.UpdateUser(id, dto);
@@ -58,16 +62,28 @@ namespace MyAccount.Controllers
         }
 
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<ActionResult<dynamic>> Delete(int id)
         {
+            await userService.DeleteUser(id);
 
+            return new OkObjectResult(new
+            {
+                message = "Usuário foi deletado."
+            });
         }
 
-        [Route("/Disable/{id}")]
-        [HttpPut]
-        public void Disable(int id)
+        [HttpPut("disable/{id}/{enable}")]
+        public async Task<ActionResult<dynamic>> DisableAsync(int id, bool enable = false)
         {
+            await userService.DisableOrEnableUser(id, enable);
+            var user = await userService.GetUserById(id);
+            var tipo = enable ? "ativado" : "desativado";
 
+            return new OkObjectResult(new
+            {
+                usuario = user,
+                message = $"Usuário foi {tipo}"
+            });
         }
     }
 }
