@@ -35,12 +35,6 @@ namespace MyAccount.Model
             UpdatedAt = DateTime.UtcNow;
         }
 
-        public void EnableUser()
-        {
-            DeletedAt = null;
-            UpdatedAt = DateTime.UtcNow;
-        }
-
         public void SetPassword(string password)
         {
             if (!string.IsNullOrEmpty(password))
