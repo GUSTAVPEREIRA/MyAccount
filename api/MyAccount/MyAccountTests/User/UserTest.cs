@@ -1,6 +1,7 @@
 using MyAccount;
 using MyAccount.DTO.User;
 using MyAccount.Model;
+using MyAccount.Repositories.IRepository;
 using MyAccount.Services.Service;
 using System;
 using System.Threading.Tasks;
@@ -12,11 +13,12 @@ namespace MyAccountTests
     {
         private readonly ApplicationContext context;
         private readonly UserService userService;        
+        private readonly IUserRepository userRepository;        
 
         public UserTest()
         {
             context = ContextTest.GetContext();            
-            userService = new UserService(context, ContextTest.GetMapping());
+            userService = new UserService(context, ContextTest.GetMapping(), userRepository);
         }       
 
         [Fact(DisplayName = "When i enter password, i want it to be encrypted.")]

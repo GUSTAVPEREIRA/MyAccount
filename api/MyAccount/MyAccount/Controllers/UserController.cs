@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MyAccount.DTO.User;
+using MyAccount.Extensions.Pagination;
 using MyAccount.Services.IService;
 using System.Threading.Tasks;
 
@@ -17,10 +18,16 @@ namespace MyAccount.Controllers
             this.userService = userService;
         }
 
-        [HttpGet]
-        public ActionResult<dynamic> Get()
+        [HttpGet("{count:int?}/{page:int?}")]
+        [Authorize]
+        public async Task<ActionResult<PageResult<UserDTO>>> GetListUsersAsync([FromQuery] UserSearchDTO search, int count = 30, int page = 1)
         {
-            return "";
+            var result = await userService.GetUsersAsync(search.filter, search.enable, count, page);
+
+            return new OkObjectResult(new
+            {
+                result
+            });
         }
 
         [HttpGet("{id}")]
