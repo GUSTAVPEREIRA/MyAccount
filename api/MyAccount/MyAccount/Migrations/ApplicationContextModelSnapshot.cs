@@ -225,7 +225,7 @@ namespace MyAccount.Migrations
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 11, 22, 17, 49, 38, 596, DateTimeKind.Utc).AddTicks(7343));
+                        .HasDefaultValue(new DateTime(2020, 12, 6, 2, 58, 43, 956, DateTimeKind.Utc).AddTicks(2600));
 
                     b.Property<DateTime?>("DeletedAt")
                         .HasColumnType("datetime2");
@@ -242,7 +242,7 @@ namespace MyAccount.Migrations
                     b.Property<DateTime>("UpdatedAt")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("datetime2")
-                        .HasDefaultValue(new DateTime(2020, 11, 22, 17, 49, 38, 601, DateTimeKind.Utc).AddTicks(8564));
+                        .HasDefaultValue(new DateTime(2020, 12, 6, 2, 58, 43, 959, DateTimeKind.Utc).AddTicks(5246));
 
                     b.Property<string>("Username")
                         .IsRequired()
