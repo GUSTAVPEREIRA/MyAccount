@@ -1,0 +1,18 @@
+docker pull microsoft/mssql-server-linux:latest
+
+docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=gpereira@1' -p 11433:1433 --name sqlserver2019 -h sqlserver2019 -d microsoft/mssql-server-linux:latest
+
+HOW YOU ACESS BANK, AND BECAUSE
+SERVERNAME = localhost,11433
+LOGIN = SA
+PASSWORD = gpereira@1
+
+// Because 
+
+Data Source=localhost,11433;Persist Security Info=True;User ID=SA;Password=gpereira@1
+
+D:\Users\GPEREIRA\DeveloperSoftware\Data\SQLServer
+
+A porta padrão do sql server sempre terá que ser 1433 dentro do container
+
+docker run -e 'ACCEPT_EULA=Y' -e 'SA_PASSWORD=gpereira@1' -p 11434:1433 -v "D:\Users\GPEREIRA\DeveloperSoftware\Data\SQLServer:/var/www" --name sqlserver2019V2 -h sqlserver2019V2 -d microsoft/mssql-server-linux:latest
