@@ -23,7 +23,7 @@ namespace MyAccount
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=DESKTOP-000L0B1;Database=MyAccountTest;Trusted_Connection=True;MultipleActiveResultSets=true;");
+                optionsBuilder.UseSqlServer("Data Source=localhost,11434;Database=MyAccount;Persist Security Info=True;MultipleActiveResultSets=true;User ID=SA;Password=gpereira@1");
             }
         }
 

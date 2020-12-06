@@ -85,7 +85,7 @@ namespace MyAccount
             });
 
             services.AddControllers();
-            services.AddEntityFrameworkSqlServer().AddDbContext<ApplicationContext>(options =>
+            services.AddDbContext<ApplicationContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("MyWebApiConection"));
             });
