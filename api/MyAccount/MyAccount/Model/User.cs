@@ -10,9 +10,49 @@ namespace MyAccount.Model
         public string Username { get; set; }
         public string Password { get; private set; }
         public string Name { get; set; }
-        public DateTime CreatedAt { get; private set; }
-        public DateTime UpdatedAt { get; set; }
-        public DateTime? DeletedAt { get; private set; }
+        public DateTime CreatedAt
+        {
+            get
+            {
+                return _CreatedAt.ToLocalTime();
+            }
+            private set
+            {
+                _CreatedAt = value;
+            }
+        }
+
+        public DateTime UpdatedAt
+        {
+            get
+            {
+                return _UpdatedAt.ToLocalTime();
+            }
+            set
+            {
+                _UpdatedAt = value;
+            }
+        }
+
+        private DateTime _UpdatedAt { get; set; }
+        private DateTime? _DeletedAt { get; set; }
+        private DateTime _CreatedAt { get; set; }
+        public DateTime? DeletedAt
+        {
+            get
+            {
+                if (_DeletedAt.HasValue)
+                {
+                    return _DeletedAt.Value.ToLocalTime();
+                }
+
+                return null;
+            }
+            private set
+            {
+                _DeletedAt = value;
+            }
+        }
 
         public User()
         {
