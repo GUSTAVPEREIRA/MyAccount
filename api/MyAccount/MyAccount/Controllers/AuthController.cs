@@ -32,6 +32,14 @@ namespace MyAccount.Controllers
                 return NotFound(new { Message = "Usuário não encontrado." });
             }
 
+            if (validUser.DeletedAt != null)
+            {
+                return BadRequest(new
+                {
+                    Message = $"O usuário foi desabilitado na data {validUser.DeletedAt.Value.ToLocalTime()}"
+                });
+            }
+
             var token = tokenService.GenerateToken(validUser);
 
             return new OkObjectResult(new
